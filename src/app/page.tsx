@@ -1,3 +1,10 @@
+import { CreateTicketForm } from "./create-ticket-form";
+
 export default function Page() {
-  return <h1>Hello, Next.js!</h1>
+  return (
+    <main>
+      <h1>Zendesk ticket creator</h1>
+      <CreateTicketForm />
+    </main>
+  )
 }
