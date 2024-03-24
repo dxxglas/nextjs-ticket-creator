@@ -3,6 +3,11 @@
 import { CustomFields } from "./constants";
 import { TicketFormData, TicketFormState } from "./types";
 
+function handleRequesterName(email: string) {
+  const name = email.substring(0, email.indexOf("@"));
+  return name;
+}
+
 export async function createTicket(
   prevState: TicketFormState,
   formData: FormData
@@ -19,7 +24,7 @@ export async function createTicket(
       ],
       subject: formData.get("subject") as string,
       requester: {
-        name: "a",
+        name: handleRequesterName(formData.get("requester_email") as string),
         email: formData.get("requester_email") as string,
       },
       comment: {
@@ -49,4 +54,4 @@ export async function createTicket(
     success: false,
     message: "",
   };
-};
+}
