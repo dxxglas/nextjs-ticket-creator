@@ -1,6 +1,6 @@
 "use client";
 
-import { LegacyRef, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { createTicket } from "@/app/actions";
 import { TicketFormState } from "./types";
@@ -8,6 +8,7 @@ import { TicketFormState } from "./types";
 import TextField from "@/components/text-field";
 import SubmitButton from "@/components/button";
 import Alert from "@/components/alert";
+import Select from "@/components/select";
 
 const initialState: TicketFormState = {
   message: "",
@@ -16,17 +17,81 @@ const initialState: TicketFormState = {
 
 export default function CreateTicketForm() {
   const formRef = useRef<HTMLFormElement>(null);
+
   const { pending } = useFormStatus();
   const [state, formAction] = useFormState(createTicket, initialState);
+
+  const [subject, setSubject] = useState("");
+
+  const renderCustomFields = () => {
+    switch (subject) {
+      case "Orders":
+        return (
+          <div>
+            <TextField
+              id="order_number"
+              type="text"
+              label="Order number"
+              required={true}
+            />
+            <TextField
+              id="affected_users"
+              type="text"
+              label="Affecting all users?"
+              required={true}
+            />
+          </div>
+        );
+      case "Payments":
+        return (
+          <div>
+            <TextField
+              id="tr_number"
+              type="text"
+              label="Transaction number"
+              required={true}
+            />
+            <TextField
+              id="tr_status"
+              type="text"
+              label="Transaction status"
+              required={true}
+            />
+            <TextField
+              id="pay_acquirer"
+              type="text"
+              label="Payment Acquirer"
+              required={true}
+            />
+          </div>
+        );
+      case "Catalog":
+        return (
+          <div>
+            <TextField id="skuid" type="number" label="SkuId" required={true} />
+            <TextField
+              id="print_page"
+              type="text"
+              label="Print of the page"
+              required={true}
+            />
+          </div>
+        );
+      case "Others":
+      default:
+        return undefined;
+    }
+  };
 
   useEffect(() => {
     if (state.success) {
       formRef.current?.reset();
+      setSubject("");
     }
-  }, [state.success]);
+  }, [state]);
 
   return (
-    <div>
+    <div className="pb-8">
       {state.message !== "" && (
         <Alert
           label={<p>{state.message}</p>}
@@ -51,7 +116,15 @@ export default function CreateTicketForm() {
           required={true}
         />
 
-        <TextField id="subject" type="text" label="Subject" required={true} />
+        <Select
+          id="subject"
+          label="Subject"
+          options={["Orders", "Payments", "Catalog", "Others"]}
+          required={true}
+          setSubject={setSubject}
+        />
+
+        {renderCustomFields()}
 
         <TextField
           id="detailing"

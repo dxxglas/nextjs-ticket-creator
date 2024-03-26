@@ -1,9 +1,6 @@
-export type TicketFormData = {
+export type TicketFormBase = {
   ticket: {
-    custom_fields: {
-      id: number;
-      value: string;
-    }[],
+    ticket_form_id: number,
     requester: {
       name: string,
       email: string,
@@ -12,6 +9,10 @@ export type TicketFormData = {
     comment: {
       body: string;
     },
+    custom_fields: {
+      id: number;
+      value: string;
+    }[],
   },
 };
 
