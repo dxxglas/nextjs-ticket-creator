@@ -1,11 +1,13 @@
 "use client";
 
+import { LegacyRef, useEffect, useRef } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { createTicket } from "@/app/actions";
 import { TicketFormState } from "./types";
 
 import TextField from "@/components/text-field";
 import SubmitButton from "@/components/button";
+import Alert from "@/components/alert";
 
 const initialState: TicketFormState = {
   message: "",
@@ -13,15 +15,28 @@ const initialState: TicketFormState = {
 };
 
 export default function CreateTicketForm() {
+  const formRef = useRef<HTMLFormElement>(null);
   const { pending } = useFormStatus();
   const [state, formAction] = useFormState(createTicket, initialState);
 
+  useEffect(() => {
+    if (state.success) {
+      formRef.current?.reset();
+    }
+  }, [state.success]);
+
   return (
     <div>
+      {state.message !== "" && (
+        <Alert
+          label={<p>{state.message}</p>}
+          status={state.success ? "success" : "error"}
+        />
+      )}
       <h2 className="pb-4	text-xl font-bold text-gray-900">
         Insert informations to create a new ticket:
       </h2>
-      <form action={formAction}>
+      <form action={formAction} ref={formRef}>
         <TextField
           id="account_name"
           type="text"
@@ -47,7 +62,6 @@ export default function CreateTicketForm() {
         />
 
         <SubmitButton label="Create ticket" loading={pending} />
-        {state.success && <p>{state.message}</p>}
       </form>
     </div>
   );

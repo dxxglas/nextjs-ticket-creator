@@ -43,15 +43,15 @@ export async function createTicket(
   });
 
   const result = await response.json();
-  if (result.status === 201) {
+  if (response.status === 201) {
     return {
       success: true,
-      message: `Ticket created! ID: ${result.ticket.id}`,
+      message: `Ticket created! Ticket ID: ${result.ticket.id}`,
     };
   }
 
   return {
     success: false,
-    message: "",
+    message: "Error on create ticket.",
   };
 }
