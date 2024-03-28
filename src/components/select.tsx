@@ -5,7 +5,7 @@ type SelectProps = {
   label: string;
   options: string[];
   required: boolean;
-  setSubject: Dispatch<SetStateAction<string>>;
+  setOption: Dispatch<SetStateAction<string>>;
 };
 
 export default function Select({
@@ -13,15 +13,16 @@ export default function Select({
   label,
   options,
   required,
-  setSubject,
+  setOption,
 }: SelectProps) {
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSubject(event.target.value);
+    setOption(event.target.value);
   };
+
   return (
-    <div className="mb-5" id={id} key={id}>
+    <div className="input-box" id={id} key={id}>
       <label
-        className="block mb-2 text-sm font-medium text-gray-900"
+        className="input-label"
         htmlFor={id}
       >
         {label}
@@ -32,7 +33,7 @@ export default function Select({
         required={required}
         defaultValue={""}
         onChange={handleChange}
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        className="input h-9"
       >
         <option value="" disabled>
           Choose an option...

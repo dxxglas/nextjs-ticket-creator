@@ -2,3 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .split-screen {
+    @apply min-h-min lg:min-h-screen h-full p-16;
+  }
+
+  .input {
+    @apply block py-1.5 px-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded border border-gray-300 focus:ring-blue-500 focus:border-blue-500;
+  }
+
+  .input-label {
+    @apply block mb-1 text-sm font-medium text-gray-900;
+  }
+
+  .input-box {
+    @apply mb-3;
+  }
+}
