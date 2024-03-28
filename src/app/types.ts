@@ -11,7 +11,7 @@ export type TicketFormBase = {
     },
     custom_fields: {
       id: number;
-      value: string;
+      value: string | boolean;
     }[],
   },
 };

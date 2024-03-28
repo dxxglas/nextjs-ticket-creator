@@ -37,7 +37,7 @@ export async function createTicket(
             },
             {
               id: OrdersCustomFields.AffectingAllUsers,
-              value: formData.get("affected_users") as string,
+              value: formData.get("affected_users") as string === "Yes",
             },
           ],
           subject: subject,
@@ -55,7 +55,6 @@ export async function createTicket(
       };
       break;
     case "Payments":
-      console.log('pay')
       data = {
         ticket: {
           custom_fields: [
