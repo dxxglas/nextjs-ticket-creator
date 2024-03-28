@@ -76,8 +76,8 @@ export default function CreateTicketForm() {
             <TextField id="skuid" type="number" label="SkuId" required={true} />
             <TextField
               id="print_page"
-              type="text"
-              label="Print of the page"
+              type="url"
+              label="Print of the page (URL)"
               required={true}
             />
           </div>
